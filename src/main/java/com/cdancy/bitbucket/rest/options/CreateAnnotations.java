@@ -15,33 +15,21 @@
  * limitations under the License.
  */
 
-package com.cdancy.bitbucket.rest.domain.repository;
+package com.cdancy.bitbucket.rest.options;
 
+import com.cdancy.bitbucket.rest.domain.insights.Annotation;
 import com.google.auto.value.AutoValue;
 import org.jclouds.json.SerializedNames;
 
 import java.util.List;
 
 @AutoValue
-public abstract class MergeConfig {
+public abstract class CreateAnnotations {
 
-    public enum MergeConfigType {
-        REPOSITORY,
-        DEFAULT,
-        PROJECT
-    }
+    public abstract List<Annotation> annotations();
 
-    public abstract MergeStrategy defaultStrategy();
-
-    public abstract List<MergeStrategy> strategies();
-
-    public abstract MergeConfigType type();
-
-    @SerializedNames({ "defaultStrategy", "strategies", "type"})
-    public static MergeConfig create(final MergeStrategy defaultStrategy, 
-            final List<MergeStrategy> strategies, 
-            final MergeConfigType type) {
-        
-        return new AutoValue_MergeConfig(defaultStrategy, strategies, type);
+    @SerializedNames({"annotations"})
+    public static CreateAnnotations create(final List<Annotation> annotations) {
+        return new AutoValue_CreateAnnotations(annotations);
     }
 }

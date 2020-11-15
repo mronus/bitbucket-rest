@@ -15,33 +15,25 @@
  * limitations under the License.
  */
 
-package com.cdancy.bitbucket.rest.domain.repository;
+package com.cdancy.bitbucket.rest.options;
+
+import com.cdancy.bitbucket.rest.domain.sshkey.AccessKey.PermissionType;
 
 import com.google.auto.value.AutoValue;
 import org.jclouds.json.SerializedNames;
 
-import java.util.List;
-
 @AutoValue
-public abstract class MergeConfig {
+public abstract class CreateAccessKey {
 
-    public enum MergeConfigType {
-        REPOSITORY,
-        DEFAULT,
-        PROJECT
+    public abstract CreateKey key();
+
+    public abstract PermissionType permission();
+
+    CreateAccessKey() {
     }
 
-    public abstract MergeStrategy defaultStrategy();
-
-    public abstract List<MergeStrategy> strategies();
-
-    public abstract MergeConfigType type();
-
-    @SerializedNames({ "defaultStrategy", "strategies", "type"})
-    public static MergeConfig create(final MergeStrategy defaultStrategy, 
-            final List<MergeStrategy> strategies, 
-            final MergeConfigType type) {
-        
-        return new AutoValue_MergeConfig(defaultStrategy, strategies, type);
+    @SerializedNames({ "key", "permission" })
+    public static CreateAccessKey create(final CreateKey key, final PermissionType permission) {
+        return new AutoValue_CreateAccessKey(key, permission);
     }
 }

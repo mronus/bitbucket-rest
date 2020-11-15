@@ -31,23 +31,29 @@ repositories {
 }
 
 dependencies {
-    ext.jcloudsVersion = '2.1.2'
-    ext.autoValueVersion = '1.6.2'
+    ext.jcloudsVersion = '2.2.1'
+    ext.autoValueVersion = '1.7.4'
+    ext.autoServiceVersion = '1.0-rc7'
+    ext.guiceVersion = '4.2.3'
 
-    compile ("org.apache.jclouds:jclouds-core:${jcloudsVersion}") 
-    compile ('com.google.auto.service:auto-service:1.0-rc3')
+    compile ("org.apache.jclouds:jclouds-core:${jcloudsVersion}")
+    compile ("com.google.inject:guice:${guiceVersion}")
+    compile ("com.google.inject.extensions:guice-assistedinject:${guiceVersion}")
     compile ("com.google.auto.value:auto-value-annotations:${autoValueVersion}")
+    annotationProcessor ("com.google.auto.value:auto-value:${autoValueVersion}")
+    compile ("com.google.auto.service:auto-service-annotations:${autoServiceVersion}")
+    annotationProcessor ("com.google.auto.service:auto-service:${autoServiceVersion}")
 
-    compileOnly ("com.google.auto.value:auto-value:${autoValueVersion}")
+    compile ('javax.xml.bind:jaxb-api:2.3.1')
 
     testCompile ("org.apache.jclouds:jclouds-core:${jcloudsVersion}:tests")
-    testCompile ("org.apache.jclouds.driver:jclouds-slf4j:${jcloudsVersion}") 
-    testCompile ('org.testng:testng:6.11') 
-    testCompile ('org.assertj:assertj-core:3.8.0') 
-    testCompile ('com.squareup.okhttp:mockwebserver:2.7.5') 
-    testCompile ('ch.qos.logback:logback-core:1.2.3') 
+    testCompile ("org.apache.jclouds.driver:jclouds-slf4j:${jcloudsVersion}")
+    testCompile ('org.testng:testng:7.3.0')
+    testCompile ('org.assertj:assertj-core:3.18.0')
+    testCompile ('com.squareup.okhttp:mockwebserver:2.7.5')
+    testCompile ('ch.qos.logback:logback-core:1.2.3')
     testCompile ('ch.qos.logback:logback-classic:1.2.3')
-    testCompile ('commons-io:commons-io:2.6')
+    testCompile ('commons-io:commons-io:2.8.0')
 }
 
 ext.compatibilityVersion = '1.8'
@@ -95,7 +101,7 @@ tasks.withType(JavaCompile) {
 }
 
 task mockTest(type: Test) {
-    useTestNG() 
+    useTestNG()
     include '**/**MockTest.class'
     maxParallelForks = 2
     testLogging {
@@ -113,7 +119,7 @@ task integTest(type: Test, dependsOn: ['mockTest']) {
             }
         }
     }
-    useTestNG() 
+    useTestNG()
     include '**/**LiveTest.class'
     testLogging {
         showStandardStreams = true

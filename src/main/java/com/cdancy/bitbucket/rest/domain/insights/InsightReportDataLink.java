@@ -15,33 +15,19 @@
  * limitations under the License.
  */
 
-package com.cdancy.bitbucket.rest.domain.repository;
+package com.cdancy.bitbucket.rest.domain.insights;
 
 import com.google.auto.value.AutoValue;
 import org.jclouds.json.SerializedNames;
 
-import java.util.List;
-
 @AutoValue
-public abstract class MergeConfig {
+public abstract class InsightReportDataLink {
+    public abstract String linkText();
 
-    public enum MergeConfigType {
-        REPOSITORY,
-        DEFAULT,
-        PROJECT
-    }
+    public abstract String href();
 
-    public abstract MergeStrategy defaultStrategy();
-
-    public abstract List<MergeStrategy> strategies();
-
-    public abstract MergeConfigType type();
-
-    @SerializedNames({ "defaultStrategy", "strategies", "type"})
-    public static MergeConfig create(final MergeStrategy defaultStrategy, 
-            final List<MergeStrategy> strategies, 
-            final MergeConfigType type) {
-        
-        return new AutoValue_MergeConfig(defaultStrategy, strategies, type);
+    @SerializedNames({ "linktext", "href" })
+    public static InsightReportDataLink create(final String linkText, final String href) {
+        return new AutoValue_InsightReportDataLink(linkText, href);
     }
 }

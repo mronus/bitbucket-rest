@@ -15,33 +15,35 @@
  * limitations under the License.
  */
 
-package com.cdancy.bitbucket.rest.domain.repository;
+package com.cdancy.bitbucket.rest.domain.search;
 
+import com.cdancy.bitbucket.rest.domain.project.Project;
 import com.google.auto.value.AutoValue;
+import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.json.SerializedNames;
 
-import java.util.List;
-
 @AutoValue
-public abstract class MergeConfig {
+public abstract class SearchScope {
 
-    public enum MergeConfigType {
-        REPOSITORY,
-        DEFAULT,
-        PROJECT
+    @Nullable
+    public abstract Project project();
+
+    @Nullable
+    public abstract String type();
+
+    @Nullable
+    public abstract SearchQuery query();
+
+    SearchScope() {
     }
 
-    public abstract MergeStrategy defaultStrategy();
-
-    public abstract List<MergeStrategy> strategies();
-
-    public abstract MergeConfigType type();
-
-    @SerializedNames({ "defaultStrategy", "strategies", "type"})
-    public static MergeConfig create(final MergeStrategy defaultStrategy, 
-            final List<MergeStrategy> strategies, 
-            final MergeConfigType type) {
+    @SerializedNames({ "project", "type", "query" })
+    public static SearchScope create(final Project project,
+                                   final String type,
+                                   final SearchQuery query) {
         
-        return new AutoValue_MergeConfig(defaultStrategy, strategies, type);
+        return new AutoValue_SearchScope(project,
+            type,
+            query);
     }
 }
